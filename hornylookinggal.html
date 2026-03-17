@@ -1,1 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Messages</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'><rect width='48' height='48' rx='12' fill='%2334C759'/><path d='M24 10c-8.8 0-16 6-16 13.4 0 4.2 2.4 8 6.2 10.5L13 40l7-3.6c1.3.3 2.6.5 4 .5 8.8 0 16-6 16-13.4S32.8 10 24 10z' fill='%23fff'/></svg>">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+--bg:#000;
+--chat-bg:#000;
+--bubble-out:#0B93F6;
+--bubble-in:#1C1C1E;
+--text:#fff;
+--text2:#8E8E93;
+--text3:#636366;
+--green:#34C759;
+--link:#0A84FF;
+--danger:#FF453A;
+}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Helvetica Neue',sans-serif;min-height:100vh;-webkit-font-smoothing:antialiased;overflow-x:hidden;font-size:16px}
+a{text-decoration:none;color:inherit}
 
+/* Status bar */
+.status-bar{position:sticky;top:0;z-index:200;background:rgba(0,0,0,.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);padding:6px 20px;display:flex;justify-content:space-between;align-items:center;font-size:12px;font-weight:600;color:#fff}
+.status-bar .time{font-weight:700;font-size:15px}
+.status-icons{display:flex;gap:5px;align-items:center}
+.status-icons svg{width:16px;height:16px}
+
+/* Nav bar */
+.nav-bar{position:sticky;top:30px;z-index:100;background:rgba(0,0,0,.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid #1C1C1E;padding:8px 16px 10px;display:flex;align-items:center;gap:12px}
+.nav-back{color:var(--link);font-size:17px;font-weight:400;display:flex;align-items:center;gap:2px;cursor:pointer}
+.nav-back svg{width:22px;height:22px}
+.nav-center{flex:1;text-align:center}
+.nav-avatar{width:36px;height:36px;border-radius:50%;margin:0 auto 2px;overflow:hidden;background:#2C2C2E}
+.nav-avatar img{width:100%;height:100%;object-fit:cover}
+.nav-name{font-size:13px;font-weight:600;color:#fff}
+.nav-right{width:60px;text-align:right}
+.nav-right svg{width:22px;height:22px;color:var(--link)}
+
+/* Chat container */
+.chat{max-width:480px;margin:0 auto;padding:8px 10px 140px}
+
+/* Date header */
+.date-header{text-align:center;padding:8px 0;font-size:12px;font-weight:600;color:var(--text2)}
+
+/* Message row */
+.msg-row{display:flex;margin-bottom:2px;animation:fadeIn .35s ease both}
+.msg-row.out{justify-content:flex-end}
+.msg-row.in{justify-content:flex-start}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* Bubble */
+.bubble{max-width:78%;padding:8px 12px;font-size:16px;line-height:1.38;border-radius:18px;position:relative;word-wrap:break-word}
+.msg-row.out .bubble{background:var(--bubble-out);color:#fff;border-bottom-right-radius:4px}
+.msg-row.in .bubble{background:var(--bubble-in);color:#fff;border-bottom-left-radius:4px}
+
+/* Tail on last bubble in sequence */
+.msg-row.out.tail .bubble{border-bottom-right-radius:4px}
+.msg-row.in.tail .bubble{border-bottom-left-radius:4px}
+
+/* Spacing between different senders */
+.msg-row.gap-top{margin-top:10px}
+
+/* Read receipt */
+.read-receipt{text-align:right;font-size:11px;color:var(--text2);padding:2px 6px 6px;font-weight:500}
+
+/* Typing indicator */
+.typing{display:flex;align-items:center;gap:3px;padding:10px 14px;background:var(--bubble-in);border-radius:18px;border-bottom-left-radius:4px;width:fit-content;margin-bottom:2px}
+.typing-dot{width:8px;height:8px;border-radius:50%;background:#636366;animation:typingPulse 1.4s infinite}
+.typing-dot:nth-child(2){animation-delay:.15s}
+.typing-dot:nth-child(3){animation-delay:.3s}
+@keyframes typingPulse{0%,60%,100%{opacity:.3;transform:scale(.85)}30%{opacity:1;transform:scale(1)}}
+
+/* Emoji large */
+.bubble.emoji-only{background:transparent!important;font-size:48px;padding:0;line-height:1.2}
+
+/* Image in chat */
+.bubble-img{max-width:220px;border-radius:16px;overflow:hidden;cursor:pointer}
+.bubble-img img{width:100%;display:block;border-radius:16px}
+
+/* Link preview */
+.link-preview{background:#1C1C1E;border-radius:16px;overflow:hidden;max-width:260px;cursor:pointer;border:1px solid #2C2C2E}
+.link-preview img{width:100%;height:140px;object-fit:cover;display:block}
+.link-preview-body{padding:10px 12px}
+.link-preview-domain{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.3px;margin-bottom:2px}
+.link-preview-title{font-size:14px;font-weight:600;color:#fff;line-height:1.3}
+
+/* Voice memo */
+.voice-memo{display:flex;align-items:center;gap:8px;padding:8px 12px;min-width:180px}
+.voice-play{width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.voice-play svg{width:12px;height:12px;fill:#fff}
+.voice-wave{flex:1;height:24px;display:flex;align-items:center;gap:1.5px}
+.voice-bar{width:2.5px;border-radius:2px;background:rgba(255,255,255,.5)}
+.voice-time{font-size:11px;color:rgba(255,255,255,.6);white-space:nowrap}
+
+/* Reaction */
+.reaction{position:absolute;bottom:-10px;right:8px;background:#1C1C1E;border:1px solid #3A3A3C;border-radius:12px;padding:1px 6px;font-size:14px;line-height:1.4}
+.msg-row.in .reaction{left:8px;right:auto}
+.reaction-spacer{height:14px}
+
+/* Screenshot label */
+.ss-label{text-align:center;font-size:12px;color:var(--text3);padding:4px 0;font-style:italic}
+
+/* CTA section */
+.cta-section{margin:12px 4px;background:linear-gradient(135deg,#1a1a2e,#16213e);border:1px solid #2a2a4a;border-radius:16px;padding:20px 16px;text-align:center;position:relative;overflow:hidden}
+.cta-section::before{content:'';position:absolute;inset:-50%;background:conic-gradient(from 0deg,transparent,rgba(11,147,246,.06),transparent,rgba(52,199,89,.06),transparent);animation:spin 8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.cta-section *{position:relative}
+.cta-tag{font-size:11px;font-weight:800;color:var(--green);letter-spacing:.8px;text-transform:uppercase;margin-bottom:8px}
+.cta-title{font-size:18px;font-weight:800;color:#fff;margin-bottom:5px;line-height:1.3}
+.cta-sub{font-size:13px;color:var(--text2);margin-bottom:16px;line-height:1.4}
+.cta-btn{display:inline-block;width:100%;max-width:340px;background:var(--green);color:#fff;font-size:17px;font-weight:800;padding:14px 20px;border-radius:14px;border:none;cursor:pointer;box-shadow:0 4px 0 #2a9d47,0 8px 20px rgba(52,199,89,.25);transition:transform .12s,box-shadow .12s}
+.cta-btn:hover{transform:translateY(-2px);box-shadow:0 6px 0 #2a9d47,0 12px 24px rgba(52,199,89,.3)}
+.cta-btn:active{transform:translateY(0);box-shadow:0 2px 0 #2a9d47}
+.cta-btn small{display:block;font-size:12px;font-weight:600;opacity:.8;margin-top:3px}
+.cta-alt{display:inline-block;margin-top:10px;font-size:13px;color:var(--link);font-weight:600}
+.cta-fine{font-size:10px;color:var(--text3);margin-top:12px;line-height:1.4}
+
+/* Input bar */
+.input-bar{position:fixed;bottom:0;left:0;right:0;z-index:100;background:rgba(0,0,0,.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-top:1px solid #1C1C1E;padding:8px 10px 28px;display:flex;align-items:center;gap:8px}
+.input-bar .cam{width:32px;height:32px;border-radius:50%;background:var(--link);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.input-bar .cam svg{width:16px;height:16px;fill:#fff}
+.input-field{flex:1;background:#1C1C1E;border:1px solid #3A3A3C;border-radius:20px;padding:8px 14px;font-size:16px;color:#fff;outline:none}
+.input-field::placeholder{color:var(--text3)}
+.input-bar .send{color:var(--link);font-weight:700;font-size:16px;padding:0 4px;cursor:pointer}
+
+/* Responsive */
+@media(max-width:380px){
+.bubble{max-width:84%;font-size:15px}
+}
+</style>
+</head>
+<body>
+
+<!-- Status bar -->
+<div class="status-bar">
+<span class="time" id="clock">9:41</span>
+<div class="status-icons">
+<svg viewBox="0 0 24 24" fill="#fff"><path d="M1 9l2 2c5.5-5.5 14.5-5.5 20 0l2-2C18.3 2.3 5.7 2.3 1 9zm8 8l3 3 3-3c-1.7-1.7-4.3-1.7-6 0zm-4-4l2 2c2.8-2.8 7.2-2.8 10 0l2-2c-3.8-3.8-10.2-3.8-14 0z"/></svg>
+<svg viewBox="0 0 24 24" fill="#fff"><rect x="1" y="6" width="3" height="12" rx="1" opacity=".3"/><rect x="6" y="4" width="3" height="14" rx="1" opacity=".5"/><rect x="11" y="2" width="3" height="16" rx="1" opacity=".7"/><rect x="16" y="0" width="3" height="18" rx="1"/></svg>
+<svg viewBox="0 0 28 14" fill="#fff"><rect x="0" y="1" width="22" height="12" rx="2.5" stroke="#fff" stroke-width="1" fill="none"/><rect x="2" y="3" width="14" height="8" rx="1.5" fill="#34C759"/><rect x="23" y="4" width="2.5" height="6" rx="1" fill="#fff" opacity=".4"/></svg>
+</div>
+</div>
+
+<!-- Nav bar -->
+<div class="nav-bar">
+<div class="nav-back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg> <span style="font-size:17px">14</span></div>
+<div class="nav-center">
+<div class="nav-avatar"><img src="https://i.pravatar.cc/80?img=32" alt=""></div>
+<div class="nav-name">Jess ❤️</div>
+</div>
+<div class="nav-right"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.81.36 1.6.68 2.34a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.74-1.24a2 2 0 0 1 2.11-.45c.74.32 1.53.55 2.34.68A2 2 0 0 1 22 16.92z"/></svg></div>
+</div>
+
+<!-- Chat -->
+<div class="chat">
+
+<div class="date-header">Today <span id="today-date"></span></div>
+
+<!-- Jess sends first -->
+<div class="msg-row in gap-top">
+<div class="bubble">omg Meg</div>
+</div>
+<div class="msg-row in">
+<div class="bubble">you need to see this</div>
+</div>
+<div class="msg-row in tail">
+<div class="bubble">I literally cannot stop thinking about it</div>
+</div>
+
+<div class="msg-row out gap-top">
+<div class="bubble">lol what</div>
+</div>
+<div class="msg-row out tail">
+<div class="bubble">you ok??</div>
+</div>
+<div class="read-receipt">Read 2:47 PM</div>
+
+<div class="msg-row in gap-top">
+<div class="bubble">ok so you know how I’ve been seeing that older guy right</div>
+</div>
+<div class="msg-row in">
+<div class="bubble">the one who’s like 52</div>
+</div>
+
+<div class="msg-row out gap-top">
+<div class="bubble">Marcus?? yeah</div>
+</div>
+<div class="msg-row out tail">
+<div class="bubble">the divorced dad lol</div>
+</div>
+<div class="read-receipt">Read 2:48 PM</div>
+
+<div class="msg-row in gap-top">
+<div class="bubble">YES him</div>
+</div>
+<div class="msg-row in">
+<div class="bubble">ok so at first things were kinda... meh</div>
+</div>
+<div class="msg-row in">
+<div class="bubble">like nice guy great dinners but in the bedroom it was giving nothing</div>
+</div>
+<div class="msg-row in tail">
+<div class="bubble">I was literally about to end it</div>
+</div>
+
+<div class="msg-row out gap-top">
+<div class="bubble">omg nooo what happened</div>
+</div>
+
+<div class="msg-row in gap-top">
+<div class="bubble">ok so like 3 weeks ago he started acting... different</div>
+</div>
+<div class="msg-row in">
+<div class="bubble">like COMPLETELY different</div>
+</div>
+<div class="msg-row in">
+<div class="bubble">Meg I’m not even exaggerating</div>
+</div>
+<div class="msg-row in tail">
+<div class="bubble">I can barely handle him now 🫣</div>
+</div>
+
+<div class="msg-row out gap-top">
+<div class="bubble">WAIT WHAT</div>
+</div>
+<div class="msg-row out">
+<div class="bubble">like... in a good way??</div>
+</div>
+<div class="msg-row out tail">
+<div class="bubble">a 52 year old??? 😳</div>
+</div>
+<div class="read-receipt">Read 2:51 PM</div>
+
+<div class="msg-row in gap-top">
+<div class="bubble">girl YES</div>
+</div>
+<div class="msg-row in">
+<div class="bubble">I’m talking like early 20s energy but he actually knows what he’s doing</div>
+</div>
+<div class="msg-row in">
+<div class="bubble">it’s honestly embarrassing how much I’m into it now</div>
+</div>
+<div class="msg-row in tail">
+<div class="bubble">like I went from almost dumping him to literally begging for him to come over 😩<span class="reaction">😂</span></div>
+</div>
+<div class="reaction-spacer"></div>
+
+<div class="msg-row out gap-top">
+<div class="bubble">JESS LMAO</div>
+</div>
+<div class="msg-row out">
+<div class="bubble">ok but what changed tho</div>
+</div>
+<div class="msg-row out tail">
+<div class="bubble">is he on something?</div>
+</div>
+<div class="read-receipt">Read 2:53 PM</div>
+
+<div class="msg-row in gap-top">
+<div class="bubble">that’s the thing</div>
+</div>
+<div class="msg-row in">
+<div class="bubble">I literally asked him the same thing</div>
+</div>
+<div class="msg-row in">
+<div class="bubble">he got kinda awkward about it but then showed me this video he found</div>
+</div>
+<div class="msg-row in tail">
+<div class="bubble">some thing about a natural method that older guys have been using</div>
+</div>
+
+<div class="msg-row out gap-top">
+<div class="bubble">a video?? lol sounds like clickbait</div>
+</div>
+
+<div class="msg-row in gap-top">
+<div class="bubble">THATS WHAT I SAID</div>
+</div>
+<div class="msg-row in">
+<div class="bubble">but Meg... the results don’t lie</div>
+</div>
+<div class="msg-row in tail">
+<div class="bubble">whatever he’s doing from that video it’s working and it’s not pills or anything weird</div>
+</div>
+
+<!-- Voice memo -->
+<div class="msg-row in gap-top">
+<div class="bubble" style="padding:0">
+<div class="voice-memo">
+<div class="voice-play"><svg viewBox="0 0 24 24"><polygon points="6,3 20,12 6,21"/></svg></div>
+<div class="voice-wave" id="wave1"></div>
+<div class="voice-time">0:14</div>
+</div>
+</div>
+</div>
+<div class="ss-label">Jess sent a voice message</div>
+
+<div class="msg-row out gap-top">
+<div class="bubble">ok wait I’m actually curious now</div>
+</div>
+<div class="msg-row out tail">
+<div class="bubble">send me the video</div>
+</div>
+<div class="read-receipt">Read 2:56 PM</div>
+
+<div class="msg-row in gap-top">
+<div class="bubble">ok hold on he just sent it to me again let me find it</div>
+</div>
+
+<!-- Typing indicator -->
+<div class="msg-row in gap-top" style="animation-delay:.5s">
+<div class="typing"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>
+</div>
+
+<div class="msg-row in gap-top" style="animation-delay:.8s">
+<div class="bubble">found it ⬇️</div>
+</div>
+
+<!-- Link preview / first CTA -->
+<div class="msg-row in tail" style="animation-delay:1s">
+<a href="YOURLINKHERE">
+<div class="link-preview">
+<img src="https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=500&h=280&fit=crop" alt="Video thumbnail">
+<div class="link-preview-body">
+<div class="link-preview-domain">unlockmethod.com</div>
+<div class="link-preview-title">The Natural Method That’s Changing Everything for Men Over 40</div>
+</div>
+</div>
+</a>
+</div>
+
+<div class="msg-row in gap-top">
+<div class="bubble">fair warning it looks kinda clickbaity at first</div>
+</div>
+<div class="msg-row in tail">
+<div class="bubble">but just actually watch it. the part about timing is what got Marcus</div>
+</div>
+
+<div class="msg-row out gap-top">
+<div class="bubble">omg ok opening it now</div>
+</div>
+<div class="read-receipt">Read 2:58 PM</div>
+
+<div class="msg-row out gap-top">
+<div class="bubble">...</div>
+</div>
+<div class="msg-row out">
+<div class="bubble">wait this is actually interesting??</div>
+</div>
+<div class="msg-row out tail">
+<div class="bubble">the part about why most stuff doesn’t work makes so much sense</div>
+</div>
+<div class="read-receipt">Read 3:04 PM</div>
+
+<div class="msg-row in gap-top">
+<div class="bubble">RIGHT</div>
+</div>
+<div class="msg-row in">
+<div class="bubble">that’s exactly what Marcus said</div>
+</div>
+<div class="msg-row in tail">
+<div class="bubble">he said consistency is the key not some overnight miracle thing</div>
+</div>
+
+<div class="msg-row out gap-top">
+<div class="bubble">I’m sending this to Jake tonight 😂</div>
+</div>
+<div class="msg-row out">
+<div class="bubble">he’s gonna think I’m crazy but idc</div>
+</div>
+<div class="msg-row out tail">
+<div class="bubble">if it works even half as well as you’re saying…<span class="reaction">🔥</span></div>
+</div>
+<div class="reaction-spacer"></div>
+<div class="read-receipt">Read 3:06 PM</div>
+
+<div class="msg-row in gap-top">
+<div class="bubble">trust me</div>
+</div>
+<div class="msg-row in">
+<div class="bubble">just make sure he actually watches the whole thing</div>
+</div>
+<div class="msg-row in">
+<div class="bubble">Marcus almost didn’t because he thought it was an ad</div>
+</div>
+<div class="msg-row in tail">
+<div class="bubble">but now he won’t shut up about it lol</div>
+</div>
+
+<div class="msg-row out gap-top">
+<div class="bubble emoji-only">😂😂😂</div>
+</div>
+
+<div class="msg-row in gap-top">
+<div class="bubble">also don’t tell Jake I told you any of this about Marcus 🙈</div>
+</div>
+<div class="msg-row in tail">
+<div class="bubble">he would literally die</div>
+</div>
+
+<div class="msg-row out gap-top">
+<div class="bubble">your secret is safe lmao</div>
+</div>
+<div class="msg-row out tail">
+<div class="bubble">sending him the link rn 🙏<span class="reaction">❤️</span></div>
+</div>
+<div class="reaction-spacer"></div>
+<div class="read-receipt">Read 3:08 PM</div>
+
+<!-- CTA Section -->
+<div class="cta-section">
+<div class="cta-tag">The video Jess is talking about</div>
+<div class="cta-title">Watch It Before It Gets Taken Down</div>
+<div class="cta-sub">The same video that changed everything for Marcus. Now you can see exactly what he did.</div>
+<a href="YOURLINKHERE"><button class="cta-btn">WATCH THE FREE VIDEO<small>Tap to watch — may be removed soon</small></button></a>
+<a href="YOURLINKHERE" class="cta-alt">Or tap here if button doesn’t load</a>
+<div class="cta-fine">For informational purposes only. Not medical advice. Results vary. Consult a healthcare professional before making changes.</div>
+</div>
+
+<!-- Post-CTA conversation continues -->
+<div class="date-header">3:42 PM</div>
+
+<div class="msg-row out gap-top">
+<div class="bubble">UPDATE</div>
+</div>
+<div class="msg-row out">
+<div class="bubble">Jake watched the whole thing</div>
+</div>
+<div class="msg-row out tail">
+<div class="bubble">he’s already ordering stuff 😂😂</div>
+</div>
+<div class="read-receipt">Read 3:42 PM</div>
+
+<div class="msg-row in gap-top">
+<div class="bubble">HAHAHA I TOLD YOU</div>
+</div>
+<div class="msg-row in">
+<div class="bubble">give it like 2-3 weeks</div>
+</div>
+<div class="msg-row in tail">
+<div class="bubble">and then you’re gonna text me back like “homg Jess you were right” 😏</div>
+</div>
+
+<div class="msg-row out gap-top">
+<div class="bubble">I’ll literally buy you dinner if this works</div>
+</div>
+
+<div class="msg-row in gap-top tail">
+<div class="bubble">save the money for new sheets 😉<span class="reaction">😂</span></div>
+</div>
+<div class="reaction-spacer"></div>
+
+<div class="msg-row out gap-top tail">
+<div class="bubble">JESS 😭😭😭</div>
+</div>
+<div class="read-receipt">Delivered</div>
+
+<!-- Second CTA -->
+<div class="cta-section" style="margin-top:20px">
+<div class="cta-tag">Don’t lose the link</div>
+<div class="cta-title">The Video That Started It All</div>
+<div class="cta-sub">⚠️ This keeps getting reuploaded and removed. If you can see it, watch now.</div>
+<a href="YOURLINKHERE"><button class="cta-btn">WATCH NOW FREE<small>Before it’s gone again</small></button></a>
+<div class="cta-fine">This content is for informational purposes only. Not medical advice. Results may vary.</div>
+</div>
+
+</div><!-- /chat -->
+
+<!-- Input bar -->
+<div class="input-bar">
+<div class="cam"><svg viewBox="0 0 24 24"><path d="M12 15.2A3.2 3.2 0 1 0 12 8.8a3.2 3.2 0 0 0 0 6.4z"/><path d="M9 2L7.17 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2h-3.17L15 2H9z"/></svg></div>
+<input type="text" class="input-field" placeholder="iMessage" readonly>
+<span class="send">↑</span>
+</div>
+
+<script>
+// Set today's date
+const d=new Date();
+const el=document.getElementById('today-date');
+if(el) el.textContent=d.toLocaleDateString('en-US',{month:'short',day:'numeric'});
+
+// Set clock
+const cl=document.getElementById('clock');
+if(cl) cl.textContent=d.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit',hour12:true}).replace(' ','');
+
+// Generate voice wave bars
+const w=document.getElementById('wave1');
+if(w){for(let i=0;i<32;i++){const b=document.createElement('div');b.className='voice-bar';b.style.height=Math.max(3,Math.random()*20)+'px';w.appendChild(b);}}
+</script>
+</body>
+</html>
