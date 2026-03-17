@@ -1,1 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TikTok - golden root trick has pharmacists SHOOK</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'><rect width='48' height='48' rx='12' fill='%23000'/><path d='M33.5 17.5c-2.1 0-4-1.2-4.9-3V28a8 8 0 1 1-6.9-7.9v4.3a3.8 3.8 0 1 0 2.7 3.6V8h4.2a6.2 6.2 0 0 0 5.9 5.3v4.2' fill='%2325F4EE'/><path d='M32.5 16.5c-2.1 0-4-1.2-4.9-3V27a8 8 0 1 1-6.9-7.9v4.3a3.8 3.8 0 1 0 2.7 3.6V7h4.2a6.2 6.2 0 0 0 5.9 5.3v4.2' fill='%23FE2C55'/></svg>">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+--bg:#000;
+--surface:#111;
+--surface2:#1a1a1a;
+--border:#2a2a2a;
+--text:#fff;
+--text2:#aaa;
+--text3:#666;
+--accent:#FE2C55;
+--accent2:#25F4EE;
+--like:#FE2C55;
+--green:#00c853;
+}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;min-height:100vh;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
 
+/* Top bar */
+.topbar{position:sticky;top:0;z-index:100;background:rgba(0,0,0,.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:0 16px;height:52px;display:flex;align-items:center;justify-content:space-between}
+.topbar-logo{display:flex;align-items:center;gap:8px;font-weight:900;font-size:18px}
+.topbar-logo svg{width:28px;height:28px}
+.topbar-right{display:flex;align-items:center;gap:8px}
+.btn-login{font-size:13px;font-weight:700;padding:6px 16px;border-radius:4px;border:1px solid var(--border);background:transparent;color:var(--text);cursor:pointer}
+.btn-signup{font-size:13px;font-weight:700;padding:6px 16px;border-radius:4px;border:none;background:var(--accent);color:#fff;cursor:pointer}
+
+/* Page shell */
+.shell{max-width:680px;margin:0 auto;padding:0 0 120px}
+
+/* Video card */
+.video-card{border-bottom:1px solid var(--border);padding:16px 16px 14px}
+.vc-header{display:flex;align-items:flex-start;gap:12px;margin-bottom:12px}
+.vc-avatar{width:44px;height:44px;border-radius:50%;flex-shrink:0;overflow:hidden;background:var(--surface2)}
+.vc-avatar img{width:100%;height:100%;object-fit:cover}
+.vc-meta{flex:1;min-width:0}
+.vc-user{font-weight:700;font-size:15px;line-height:1.3}
+.vc-user span{color:var(--text2);font-weight:400;font-size:13px;margin-left:6px}
+.vc-caption{font-size:14px;line-height:1.45;color:var(--text);margin-top:4px}
+.vc-caption .tag{color:var(--accent2);font-weight:600}
+.vc-follow{flex-shrink:0;border:1px solid var(--accent);color:var(--accent);background:transparent;font-size:13px;font-weight:700;padding:5px 16px;border-radius:4px;cursor:pointer;margin-top:2px}
+
+/* Thumbnail */
+.vc-thumb{position:relative;width:100%;max-width:360px;aspect-ratio:9/16;border-radius:8px;overflow:hidden;background:var(--surface2);margin-bottom:14px;cursor:pointer}
+.vc-thumb img{width:100%;height:100%;object-fit:cover}
+.vc-play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.35)}
+.vc-play svg{width:56px;height:56px;filter:drop-shadow(0 2px 8px rgba(0,0,0,.5))}
+.vc-views{position:absolute;bottom:8px;left:10px;font-size:12px;font-weight:700;color:#fff;display:flex;align-items:center;gap:4px;text-shadow:0 1px 3px rgba(0,0,0,.7)}
+
+/* Engagement bar */
+.engage{display:flex;align-items:center;gap:20px;padding:4px 0}
+.engage-btn{display:flex;align-items:center;gap:5px;font-size:13px;font-weight:600;color:var(--text2);cursor:pointer;background:none;border:none}
+.engage-btn svg{width:20px;height:20px}
+.engage-btn.liked svg{fill:var(--like)}
+.engage-btn.liked{color:var(--like)}
+
+/* Divider */
+.divider{height:1px;background:var(--border);margin:0}
+
+/* Section heading */
+.section-head{padding:14px 16px 10px;font-size:14px;font-weight:700;color:var(--text2);display:flex;align-items:center;gap:8px}
+.section-head .count{color:var(--text);font-size:15px}
+
+/* Comment */
+.comment{padding:12px 16px;display:flex;gap:10px;animation:fadeUp .4s ease both}
+.comment:nth-child(2){animation-delay:.05s}
+.comment:nth-child(3){animation-delay:.1s}
+.comment:nth-child(4){animation-delay:.15s}
+.comment:nth-child(5){animation-delay:.2s}
+.comment:nth-child(6){animation-delay:.25s}
+.comment:nth-child(7){animation-delay:.3s}
+.comment:nth-child(8){animation-delay:.35s}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.c-av{width:34px;height:34px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;color:#fff}
+.c-body{flex:1;min-width:0}
+.c-name{font-size:13px;font-weight:700;color:var(--text2);margin-bottom:2px}
+.c-name .author-badge{font-size:10px;background:var(--accent);color:#fff;padding:1px 6px;border-radius:3px;margin-left:6px;font-weight:700;vertical-align:middle}
+.c-name .creator-badge{font-size:10px;background:var(--accent2);color:#000;padding:1px 6px;border-radius:3px;margin-left:6px;font-weight:700;vertical-align:middle}
+.c-text{font-size:14px;line-height:1.5;color:var(--text);margin-bottom:6px}
+.c-text .mention{color:var(--accent2);font-weight:600}
+.c-text .link-text{color:var(--accent2);text-decoration:underline;cursor:pointer}
+.c-actions{display:flex;align-items:center;gap:14px;font-size:12px;color:var(--text3)}
+.c-actions span{cursor:pointer}
+.c-actions .c-likes{display:flex;align-items:center;gap:3px}
+.c-actions .c-likes svg{width:14px;height:14px}
+.c-time{font-size:11px;color:var(--text3)}
+
+/* Reply */
+.reply{margin-left:44px;padding:8px 16px 8px 0;display:flex;gap:10px}
+.reply .c-av{width:28px;height:28px;font-size:11px}
+
+/* Pinned */
+.pinned-label{font-size:11px;color:var(--accent);font-weight:700;display:flex;align-items:center;gap:4px;margin-bottom:6px}
+.pinned-label svg{width:12px;height:12px}
+
+/* Viral box / CTA */
+.cta-box{margin:8px 16px 12px;background:linear-gradient(135deg,#1a1a2e 0%,#16213e 100%);border:1px solid #2a2a4a;border-radius:12px;padding:20px 18px;text-align:center;position:relative;overflow:hidden}
+.cta-box::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:conic-gradient(from 0deg,transparent,rgba(37,244,238,.06),transparent,rgba(254,44,85,.06),transparent);animation:rotateBg 8s linear infinite}
+@keyframes rotateBg{to{transform:rotate(360deg)}}
+.cta-box *{position:relative}
+.cta-tag{font-size:11px;font-weight:800;color:var(--accent2);letter-spacing:.8px;text-transform:uppercase;margin-bottom:8px}
+.cta-title{font-size:18px;font-weight:900;color:#fff;margin-bottom:6px;line-height:1.3}
+.cta-sub{font-size:13px;color:var(--text2);margin-bottom:16px;line-height:1.4}
+.cta-btn{display:inline-block;width:100%;max-width:400px;background:var(--accent);color:#fff;font-size:17px;font-weight:900;padding:15px 20px;border-radius:6px;border:none;cursor:pointer;box-shadow:0 4px 0 #c4163f,0 8px 20px rgba(254,44,85,.3);transition:transform .12s,box-shadow .12s}
+.cta-btn:hover{transform:translateY(-2px);box-shadow:0 6px 0 #c4163f,0 12px 24px rgba(254,44,85,.35)}
+.cta-btn:active{transform:translateY(0);box-shadow:0 2px 0 #c4163f}
+.cta-btn small{display:block;font-size:12px;font-weight:600;opacity:.85;margin-top:3px}
+.cta-alt{display:inline-block;margin-top:10px;font-size:13px;color:var(--accent2);font-weight:700;text-decoration:underline}
+.cta-fine{font-size:10px;color:var(--text3);margin-top:12px;line-height:1.4}
+
+/* Live indicator */
+.live-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--green);margin-right:4px;animation:pulse 1.5s infinite}
+@keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(0,200,83,.5)}50%{opacity:.8;box-shadow:0 0 0 6px rgba(0,200,83,0)}}
+
+/* Trending banner */
+.trend-banner{background:linear-gradient(90deg,var(--accent) 0%,#ff6b81 100%);padding:8px 16px;font-size:12px;font-weight:700;color:#fff;text-align:center;letter-spacing:.3px}
+
+/* View more replies */
+.view-replies{margin-left:44px;padding:6px 16px;font-size:13px;font-weight:600;color:var(--text3);cursor:pointer}
+.view-replies:hover{color:var(--text2)}
+
+/* Bottom bar */
+.bottom-bar{position:fixed;bottom:0;left:0;right:0;z-index:100;background:rgba(0,0,0,.95);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-top:1px solid var(--border);padding:10px 16px;display:flex;align-items:center;gap:10px}
+.bottom-bar input{flex:1;background:var(--surface2);border:1px solid var(--border);border-radius:20px;padding:10px 16px;font-size:14px;color:var(--text);outline:none}
+.bottom-bar input::placeholder{color:var(--text3)}
+.bottom-bar button{background:var(--accent);border:none;color:#fff;padding:10px 18px;border-radius:20px;font-weight:700;font-size:14px;cursor:pointer}
+
+/* Responsive */
+@media(min-width:768px){
+  .vc-thumb{max-width:320px}
+}
+</style>
+</head>
+<body>
+
+<!-- Trending banner -->
+<div class="trend-banner">
+<span class="live-dot"></span> Trending in Men's Health — 2.3M views in 14 hours
+</div>
+
+<!-- Top bar -->
+<nav class="topbar">
+<div class="topbar-logo">
+<svg viewBox="0 0 48 48" fill="none"><rect width="48" height="48" rx="12" fill="#000"/><path d="M33.5 17.5c-2.1 0-4-1.2-4.9-3V28a8 8 0 1 1-6.9-7.9v4.3a3.8 3.8 0 1 0 2.7 3.6V8h4.2a6.2 6.2 0 0 0 5.9 5.3v4.2" fill="#25F4EE"/><path d="M32.5 16.5c-2.1 0-4-1.2-4.9-3V27a8 8 0 1 1-6.9-7.9v4.3a3.8 3.8 0 1 0 2.7 3.6V7h4.2a6.2 6.2 0 0 0 5.9 5.3v4.2" fill="#FE2C55"/></svg>
+TikTok
+</div>
+<div class="topbar-right">
+<button class="btn-login">Log in</button>
+<button class="btn-signup">Sign up</button>
+</div>
+</nav>
+
+<!-- Shell -->
+<div class="shell">
+
+<!-- Video Card -->
+<div class="video-card">
+<div class="vc-header">
+<div class="vc-avatar"><img src="https://i.pravatar.cc/100?img=47" alt="avatar"></div>
+<div class="vc-meta">
+<div class="vc-user">wellnesswithbri <span>· 14h</span></div>
+<div class="vc-caption">POV: you find out why your neighbor's 71yo husband still has more energy than guys half his age <span class="tag">#goldenroot</span> <span class="tag">#menshealth</span> <span class="tag">#ginger</span> <span class="tag">#honey</span> <span class="tag">#over40</span> <span class="tag">#pharmacist</span> <span class="tag">#natural</span></div>
+</div>
+<button class="vc-follow">Follow</button>
+</div>
+
+<!-- Thumbnail -->
+<a href="YOURLINKHERE">
+<div class="vc-thumb">
+<img src="https://images.unsplash.com/photo-1615485290382-441e4d049cb5?w=400&h=700&fit=crop&crop=center" alt="Golden root ginger honey">
+<div class="vc-play"><svg viewBox="0 0 80 80" fill="none"><circle cx="40" cy="40" r="38" fill="rgba(0,0,0,.55)" stroke="#fff" stroke-width="2"/><polygon points="32,24 60,40 32,56" fill="#fff"/></svg></div>
+<div class="vc-views"><svg width="14" height="14" viewBox="0 0 24 24" fill="#fff"><polygon points="5,3 19,12 5,21"/></svg> 2.3M</div>
+</div>
+</a>
+
+<!-- Engagement -->
+<div class="engage">
+<button class="engage-btn liked"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg> 847K</button>
+<button class="engage-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> 12.4K</button>
+<button class="engage-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg> Share</button>
+</div>
+</div>
+
+<div class="divider"></div>
+
+<!-- Comments Section -->
+<div class="section-head">Comments <span class="count">12,489</span></div>
+
+<!-- PINNED COMMENT - Pharmacist wife -->
+<div class="comment">
+<div class="c-av" style="background:linear-gradient(135deg,#8B5CF6,#EC4899)">R</div>
+<div class="c-body">
+<div class="pinned-label"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 12V4h1V2H7v2h1v8l-2 2v2h5.2v6h1.6v-6H18v-2l-2-2z"/></svg> Pinned by creator</div>
+<div class="c-name">pharmwife_rachel <span class="author-badge">Top Fan</span></div>
+<div class="c-text">My husband is a pharmacist. He’s been quietly telling men about this for YEARS. The golden root + raw honey method. It’s not new. It’s just that nobody wants to talk about it publicly because it would hurt certain companies’ bottom line. I’ve seen what it does firsthand. The difference is not subtle. Trust me on this one.</div>
+<div class="c-actions"><span class="c-likes"><svg viewBox="0 0 24 24" fill="var(--like)"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg> 24.1K</span> <span>Reply</span> <span class="c-time">12h</span></div>
+</div>
+</div>
+
+<!-- Reply to pinned -->
+<div class="reply">
+<div class="c-av" style="background:#3B82F6">T</div>
+<div class="c-body">
+<div class="c-name">trevormadsen88</div>
+<div class="c-text"><span class="mention">@pharmwife_rachel</span> This sounds made up lol. "Pharmacist wife" ok sure</div>
+<div class="c-actions"><span class="c-likes"><svg viewBox="0 0 24 24" fill="var(--text3)"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg> 89</span> <span>Reply</span> <span class="c-time">11h</span></div>
+</div>
+</div>
+
+<!-- Rachel replies -->
+<div class="reply">
+<div class="c-av" style="background:linear-gradient(135deg,#8B5CF6,#EC4899)">R</div>
+<div class="c-body">
+<div class="c-name">pharmwife_rachel <span class="author-badge">Top Fan</span></div>
+<div class="c-text"><span class="mention">@trevormadsen88</span> I literally watch men come back week after week saying it changed everything. My husband doesn’t sell anything — he just tells them the combination and the timing. Believe what you want but the comments here speak for themselves.</div>
+<div class="c-actions"><span class="c-likes"><svg viewBox="0 0 24 24" fill="var(--like)"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg> 8,412</span> <span>Reply</span> <span class="c-time">11h</span></div>
+</div>
+</div>
+
+<div class="view-replies">▸ View 847 more replies</div>
+
+<div class="divider"></div>
+
+<!-- Comment 2 -->
+<div class="comment">
+<div class="c-av" style="background:#F59E0B">M</div>
+<div class="c-body">
+<div class="c-name">mike_d_42</div>
+<div class="c-text">Wait is this the ginger and honey thing?? My dad has been doing something like this for months and my mom keeps joking that he’s “acting 25 again.” I never put it together until now.</div>
+<div class="c-actions"><span class="c-likes"><svg viewBox="0 0 24 24" fill="var(--like)"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg> 6,201</span> <span>Reply</span> <span class="c-time">10h</span></div>
+</div>
+</div>
+
+<!-- Rachel replies to mike -->
+<div class="reply">
+<div class="c-av" style="background:linear-gradient(135deg,#8B5CF6,#EC4899)">R</div>
+<div class="c-body">
+<div class="c-name">pharmwife_rachel <span class="author-badge">Top Fan</span></div>
+<div class="c-text"><span class="mention">@mike_d_42</span> Yes but it’s HOW you prepare it and WHEN you take it that matters. That’s what the video explains. Most people just toss ginger in a smoothie and wonder why nothing happens. The order and timing is everything.</div>
+<div class="c-actions"><span class="c-likes"><svg viewBox="0 0 24 24" fill="var(--like)"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg> 4,890</span> <span>Reply</span> <span class="c-time">10h</span></div>
+</div>
+</div>
+
+<div class="divider"></div>
+
+<!-- Comment 3 -->
+<div class="comment">
+<div class="c-av" style="background:#10B981">J</div>
+<div class="c-body">
+<div class="c-name">jen.wellness.co <span class="creator-badge">Creator</span></div>
+<div class="c-text">As a nutritionist I need to say — the individual ingredients here are backed by real research. Gingerols improve blood flow. Raw honey has nitric oxide precursors. It’s the combination and timing that most people get wrong. This video actually explains it well.</div>
+<div class="c-actions"><span class="c-likes"><svg viewBox="0 0 24 24" fill="var(--like)"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg> 11,304</span> <span>Reply</span> <span class="c-time">9h</span></div>
+</div>
+</div>
+
+<div class="divider"></div>
+
+<!-- CTA BOX -->
+<div class="cta-box">
+<div class="cta-tag">The video everyone keeps asking about</div>
+<div class="cta-title">Watch the Golden Root Method Explained</div>
+<div class="cta-sub">24.1K likes on the pinned comment alone. See what the pharmacist's wife is talking about.</div>
+<a href="YOURLINKHERE"><button class="cta-btn">WATCH THE VIDEO NOW<small>Tap to watch — may be removed soon</small></button></a>
+<a href="YOURLINKHERE" class="cta-alt">Or tap here if the button doesn’t work</a>
+<div class="cta-fine">For informational purposes only. Not medical advice. Results vary. Consult a healthcare professional before making changes.</div>
+</div>
+
+<div class="divider"></div>
+
+<!-- Comment 4 -->
+<div class="comment">
+<div class="c-av" style="background:#EF4444">S</div>
+<div class="c-body">
+<div class="c-name">sarah_m_1987</div>
+<div class="c-text">I showed this to my husband 3 weeks ago and the change is... noticeable. I’m not going to get into details but I haven’t felt like this since we were dating. He doesn’t even know I’m commenting this lol.</div>
+<div class="c-actions"><span class="c-likes"><svg viewBox="0 0 24 24" fill="var(--like)"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg> 3,877</span> <span>Reply</span> <span class="c-time">8h</span></div>
+</div>
+</div>
+
+<div class="divider"></div>
+
+<!-- Comment 5 -->
+<div class="comment">
+<div class="c-av" style="background:#6366F1">D</div>
+<div class="c-body">
+<div class="c-name">dave_runs_58</div>
+<div class="c-text">58 years old. Tried every supplement on the market. This is the first thing that didn’t make me feel jittery or give me a headache. The timing part in the video is what made the difference for me. Wish I found this years ago.</div>
+<div class="c-actions"><span class="c-likes"><svg viewBox="0 0 24 24" fill="var(--like)"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg> 2,145</span> <span>Reply</span> <span class="c-time">7h</span></div>
+</div>
+</div>
+
+<div class="divider"></div>
+
+<!-- Comment 6 -->
+<div class="comment">
+<div class="c-av" style="background:#F97316">K</div>
+<div class="c-body">
+<div class="c-name">kimberly.g.fit</div>
+<div class="c-text">Not a miracle cure. But the steady energy thing is real. My partner started this and the difference after 2 weeks was obvious. Also his morning bathroom situation completely cleared up which was unexpected.</div>
+<div class="c-actions"><span class="c-likes"><svg viewBox="0 0 24 24" fill="var(--like)"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg> 1,203</span> <span>Reply</span> <span class="c-time">6h</span></div>
+</div>
+</div>
+
+<div class="divider"></div>
+
+<!-- Comment 7 -->
+<div class="comment">
+<div class="c-av" style="background:#14B8A6">N</div>
+<div class="c-body">
+<div class="c-name">noaht_1990</div>
+<div class="c-text">The video keeps getting taken down and reuploaded. If you can see it right now, watch it. I had to try 3 times before it loaded for me.</div>
+<div class="c-actions"><span class="c-likes"><svg viewBox="0 0 24 24" fill="var(--like)"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg> 5,412</span> <span>Reply</span> <span class="c-time">5h</span></div>
+</div>
+</div>
+
+<div class="divider"></div>
+
+<!-- Comment 8 -->
+<div class="comment">
+<div class="c-av" style="background:#EC4899">A</div>
+<div class="c-body">
+<div class="c-name">alyssa.k22</div>
+<div class="c-text">Can confirm the ginger + honey combo is legit but DO NOT overdo the ginger. The video explains the right amount. More is not better with this one.</div>
+<div class="c-actions"><span class="c-likes"><svg viewBox="0 0 24 24" fill="var(--like)"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg> 987</span> <span>Reply</span> <span class="c-time">4h</span></div>
+</div>
+</div>
+
+<div class="divider"></div>
+
+<!-- Comment 9 -->
+<div class="comment">
+<div class="c-av" style="background:#8B5CF6">L</div>
+<div class="c-body">
+<div class="c-name">luis.garcia.tx</div>
+<div class="c-text">My wife sent me this video and I rolled my eyes. Tried it anyway because she wouldn’t stop talking about it. 3 weeks in and I genuinely feel different. She will be thanking this app forever.</div>
+<div class="c-actions"><span class="c-likes"><svg viewBox="0 0 24 24" fill="var(--like)"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg> 1,678</span> <span>Reply</span> <span class="c-time">3h</span></div>
+</div>
+</div>
+
+<div class="divider"></div>
+
+<!-- Second CTA -->
+<div class="cta-box">
+<div class="cta-tag">Still here? Don’t miss it</div>
+<div class="cta-title">The Video That Started This Thread</div>
+<div class="cta-sub"><span class="live-dot"></span> <span id="viewer-count">4,812</span> people watching right now</div>
+<a href="YOURLINKHERE"><button class="cta-btn">WATCH THE FREE VIDEO<small>Before it gets removed again</small></button></a>
+<div class="cta-fine">This content is for informational purposes only. Not medical advice. Results vary.</div>
+</div>
+
+<!-- Comment 10 -->
+<div class="comment">
+<div class="c-av" style="background:#0EA5E9">P</div>
+<div class="c-body">
+<div class="c-name">pete_strongman</div>
+<div class="c-text">The fact that this is free information and people are still sleeping on it is wild. Pharmaceutical industry does not want this out there.</div>
+<div class="c-actions"><span class="c-likes"><svg viewBox="0 0 24 24" fill="var(--like)"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg> 2,901</span> <span>Reply</span> <span class="c-time">2h</span></div>
+</div>
+</div>
+
+<div class="divider"></div>
+
+<!-- Comment 11 -->
+<div class="comment">
+<div class="c-av" style="background:#78716C">W</div>
+<div class="c-body">
+<div class="c-name">will_b_71</div>
+<div class="c-text">I’m 71. My wife thought I was on something. I told her it’s ginger and honey. She didn’t believe me. Showed her the video. Now she makes it for me every night before bed.</div>
+<div class="c-actions"><span class="c-likes"><svg viewBox="0 0 24 24" fill="var(--like)"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg> 9,445</span> <span>Reply</span> <span class="c-time">1h</span></div>
+</div>
+</div>
+
+</div><!-- /shell -->
+
+<!-- Bottom bar -->
+<div class="bottom-bar">
+<input type="text" placeholder="Add a comment..." readonly>
+<button>Post</button>
+</div>
+
+<script>
+// Animate viewer count
+setInterval(()=>{
+const el=document.getElementById('viewer-count');
+if(el){const n=parseInt(el.textContent.replace(/,/g,''));const delta=Math.floor(Math.random()*7)-2;const next=Math.max(4200,n+delta);el.textContent=next.toLocaleString();}
+},3000);
+</script>
+</body>
+</html>
