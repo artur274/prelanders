@@ -1,1 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Doctors Baffled After Viral 'Vicks Trick' Crashes Supplement Site | WKRN Health Desk</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📺</text></svg>">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+--news-red:#d32f2f;
+--news-dark:#1a1a2e;
+--news-bg:#f5f5f5;
+--news-card:#fff;
+--news-text:#222;
+--news-secondary:#555;
+--news-border:#e0e0e0;
+--news-blue:#1565c0;
+--news-accent:#ff6f00;
+}
+body{font-family:Georgia,'Times New Roman',Times,serif;background:var(--news-bg);color:var(--news-text);line-height:1.7}
 
+/* Animations */
+@keyframes flashBanner{0%,100%{opacity:1}50%{opacity:.4}}
+@keyframes slideIn{from{transform:translateX(100%)}to{transform:translateX(-100%)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.03)}}
+@keyframes borderGlow{0%,100%{box-shadow:0 0 5px rgba(211,47,47,.2)}50%{box-shadow:0 0 20px rgba(211,47,47,.5)}}
+@keyframes countUp{from{opacity:0}to{opacity:1}}
+
+.fade-up{opacity:0;transform:translateY(15px);transition:opacity .6s,transform .6s}
+.fade-up.visible{opacity:1;transform:translateY(0)}
+
+/* Breaking banner */
+.breaking-bar{background:var(--news-red);color:#fff;padding:8px 16px;font-family:Arial,sans-serif;font-size:12px;font-weight:700;display:flex;align-items:center;gap:8px;position:sticky;top:0;z-index:200;overflow:hidden}
+.breaking-bar .badge{background:#fff;color:var(--news-red);padding:2px 8px;border-radius:3px;font-size:11px;text-transform:uppercase;letter-spacing:.5px;animation:flashBanner 1.5s infinite;flex-shrink:0}
+.breaking-bar .ticker{white-space:nowrap;animation:slideIn 20s linear infinite}
+
+/* Removal warning banner */
+.removal-banner{background:linear-gradient(90deg,#1a1a2e,#d32f2f,#1a1a2e);color:#fff;padding:10px 16px;text-align:center;font-family:Arial,sans-serif;font-size:13px;font-weight:700;animation:flashBanner 1.2s infinite;letter-spacing:.3px}
+.removal-banner svg{width:14px;height:14px;fill:#fff;vertical-align:middle;margin-right:4px}
+
+/* Site header */
+.site-header{background:var(--news-dark);padding:12px 16px;display:flex;align-items:center;justify-content:space-between}
+.site-logo{color:#fff;font-family:Arial,sans-serif;font-size:20px;font-weight:900;letter-spacing:-0.5px}
+.site-logo span{color:var(--news-red)}
+.site-nav{display:flex;gap:16px}
+.site-nav a{color:rgba(255,255,255,.7);font-family:Arial,sans-serif;font-size:12px;text-decoration:none;text-transform:uppercase;letter-spacing:.5px}
+
+/* Category bar */
+.cat-bar{background:#fff;border-bottom:2px solid var(--news-red);padding:8px 16px;font-family:Arial,sans-serif;font-size:12px;color:var(--news-secondary);display:flex;align-items:center;gap:8px}
+.cat-bar .cat-label{background:var(--news-red);color:#fff;padding:2px 8px;border-radius:2px;font-weight:700;font-size:11px;text-transform:uppercase}
+.cat-bar .breadcrumb{color:var(--news-secondary)}
+.cat-bar .breadcrumb a{color:var(--news-blue);text-decoration:none}
+
+/* Article shell */
+.article-shell{max-width:720px;margin:0 auto;padding:20px 16px 100px}
+
+/* Article header */
+.article-header{margin-bottom:24px;animation:fadeUp .6s ease both}
+.article-header h1{font-size:28px;line-height:1.25;margin-bottom:10px;font-weight:800;color:var(--news-dark)}
+.article-header .subtitle{font-size:16px;color:var(--news-secondary);font-style:italic;margin-bottom:14px;line-height:1.5}
+.byline{display:flex;align-items:center;gap:10px;padding:12px 0;border-top:1px solid var(--news-border);border-bottom:1px solid var(--news-border);font-family:Arial,sans-serif;font-size:13px}
+.byline-avatar{width:36px;height:36px;border-radius:50%;object-fit:cover}
+.byline-info{flex:1}
+.byline-name{font-weight:700;color:var(--news-text)}
+.byline-name a{color:var(--news-blue);text-decoration:none}
+.byline-date{color:var(--news-secondary);font-size:12px}
+.byline-share{display:flex;gap:8px}
+.byline-share a{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none}
+.byline-share a svg{width:14px;height:14px;fill:#fff}
+.share-fb{background:#1877f2}
+.share-tw{background:#000}
+.share-mail{background:#555}
+
+/* Article body */
+.article-body{font-size:17px;line-height:1.8}
+.article-body p{margin-bottom:18px}
+.article-body .lead{font-size:19px;font-weight:600;color:var(--news-dark)}
+
+/* Figure / image */
+.article-figure{margin:24px 0;position:relative}
+.article-figure img{width:100%;border-radius:4px;display:block}
+.article-figure figcaption{font-family:Arial,sans-serif;font-size:12px;color:var(--news-secondary);padding:6px 0;font-style:italic}
+
+/* Blockquote */
+.article-quote{border-left:4px solid var(--news-red);margin:24px 0;padding:16px 20px;background:#fafafa;font-style:italic;font-size:18px;line-height:1.6;color:var(--news-dark)}
+.article-quote cite{display:block;font-style:normal;font-size:13px;color:var(--news-secondary);margin-top:8px;font-family:Arial,sans-serif}
+
+/* Info box */
+.info-box{background:linear-gradient(135deg,#e8f5e9,#f1f8e9);border:1px solid #c8e6c9;border-radius:8px;padding:16px;margin:24px 0;font-family:Arial,sans-serif;font-size:14px;line-height:1.6}
+.info-box h3{font-size:15px;color:#2e7d32;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.info-box ul{list-style:none;padding:0}
+.info-box ul li{padding:4px 0;padding-left:20px;position:relative}
+.info-box ul li::before{content:'\2713';position:absolute;left:0;color:#2e7d32;font-weight:700}
+
+/* Warning box */
+.warning-box{background:#fff3e0;border:1px solid #ffe0b2;border-radius:8px;padding:16px;margin:24px 0;font-family:Arial,sans-serif;font-size:14px;line-height:1.6;animation:borderGlow 2s infinite}
+.warning-box strong{color:var(--news-accent)}
+
+/* CTA button */
+.cta-btn{display:block;width:100%;padding:16px;background:var(--news-red);color:#fff;border:none;border-radius:8px;font-family:Arial,sans-serif;font-size:17px;font-weight:800;text-align:center;text-decoration:none;cursor:pointer;transition:all .2s;margin:20px 0 8px;text-transform:uppercase;letter-spacing:.5px}
+.cta-btn:hover{background:#b71c1c;transform:translateY(-2px);box-shadow:0 6px 20px rgba(211,47,47,.3)}
+.cta-btn.pulse-anim{animation:pulse 2s infinite}
+.cta-sub{display:block;text-align:center;font-family:Arial,sans-serif;font-size:12px;color:var(--news-secondary);margin-bottom:20px}
+
+/* Viewer count */
+.viewer-count{text-align:center;font-family:Arial,sans-serif;font-size:13px;color:var(--news-secondary);padding:8px 0;display:flex;align-items:center;justify-content:center;gap:6px}
+.viewer-count .dot{width:8px;height:8px;background:var(--news-red);border-radius:50%;display:inline-block;animation:flashBanner 1s infinite}
+
+/* Poll */
+.poll-card{background:var(--news-card);border:1px solid var(--news-border);border-radius:8px;padding:16px;margin:24px 0;font-family:Arial,sans-serif}
+.poll-card h4{font-size:14px;font-weight:700;margin-bottom:12px;color:var(--news-dark)}
+.poll-bar-wrap{margin-bottom:8px}
+.poll-bar-label{display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px}
+.poll-bar{height:28px;background:#eee;border-radius:4px;overflow:hidden;position:relative}
+.poll-bar-fill{height:100%;border-radius:4px;display:flex;align-items:center;padding-left:8px;font-size:11px;color:#fff;font-weight:700;transition:width 1.5s ease}
+.poll-bar-fill.red{background:var(--news-red)}
+.poll-bar-fill.blue{background:var(--news-blue)}
+.poll-bar-fill.gray{background:#999}
+.poll-total{font-size:12px;color:var(--news-secondary);margin-top:8px}
+
+/* Comments section */
+.comments-section{border-top:2px solid var(--news-border);margin-top:32px;padding-top:20px}
+.comments-header{font-family:Arial,sans-serif;font-size:16px;font-weight:700;margin-bottom:16px;color:var(--news-dark)}
+.comment{border-bottom:1px solid var(--news-border);padding:14px 0;animation:fadeUp .5s ease both}
+.comment-top{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.comment-avatar{width:32px;height:32px;border-radius:50%;object-fit:cover}
+.comment-name{font-family:Arial,sans-serif;font-size:13px;font-weight:700}
+.comment-verified{font-size:10px;color:var(--news-blue);font-family:Arial,sans-serif}
+.comment-date{font-family:Arial,sans-serif;font-size:11px;color:var(--news-secondary);margin-left:auto}
+.comment-text{font-size:15px;line-height:1.6;margin-bottom:6px}
+.comment-actions{display:flex;gap:16px;font-family:Arial,sans-serif;font-size:12px;color:var(--news-secondary)}
+.comment-actions span{cursor:pointer}
+.comment-actions .liked{color:var(--news-red);font-weight:600}
+
+/* Related sidebar */
+.related-box{background:var(--news-card);border:1px solid var(--news-border);border-radius:8px;padding:16px;margin:24px 0}
+.related-box h4{font-family:Arial,sans-serif;font-size:14px;font-weight:700;color:var(--news-dark);margin-bottom:12px;text-transform:uppercase;letter-spacing:.5px;border-bottom:2px solid var(--news-red);padding-bottom:8px}
+.related-item{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid var(--news-border);cursor:pointer}
+.related-item:last-child{border-bottom:none}
+.related-item img{width:80px;height:56px;border-radius:4px;object-fit:cover;flex-shrink:0}
+.related-item .ri-text{font-family:Arial,sans-serif;font-size:13px;font-weight:600;line-height:1.4;color:var(--news-dark)}
+.related-item .ri-cat{font-size:10px;color:var(--news-red);text-transform:uppercase;font-weight:700;margin-top:2px}
+
+/* Responsive */
+@media(max-width:480px){
+.article-header h1{font-size:22px}
+.article-body{font-size:16px}
+.site-nav{display:none}
+.article-shell{padding:16px 12px 100px}
+}
+</style>
+</head>
+<body>
+
+
+<!-- Breaking News Ticker -->
+<div class="breaking-bar">
+<span class="badge">BREAKING</span>
+<span class="ticker">HEALTH ALERT: Viral 'Vicks VapoRub trick' video removed from multiple platforms — Supplement company website crashes after 2M+ views — Stanford-linked doctor under review — FDA has not issued statement</span>
+</div>
+
+<!-- Video Removal Warning -->
+<div class="removal-banner">
+<svg viewBox="0 0 24 24"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg>
+⚠️ THIS VIDEO WILL BE REMOVED SOON — Watch Before It's Taken Down
+</div>
+
+<!-- Site Header -->
+<div class="site-header">
+<div class="site-logo">WKRN <span>HEALTH</span></div>
+<nav class="site-nav">
+<a href="#">Home</a>
+<a href="#">Health</a>
+<a href="#">Science</a>
+<a href="#">Wellness</a>
+</nav>
+</div>
+
+<!-- Category Bar -->
+<div class="cat-bar">
+<span class="cat-label">Investigation</span>
+<span class="breadcrumb"><a href="#">Health</a> &gt; <a href="#">Men's Wellness</a> &gt; Viral Trends</span>
+</div>
+
+<div class="article-shell">
+
+<!-- Article Header -->
+<header class="article-header">
+<h1>Doctors Baffled After Viral 'Vicks Trick' Video Crashes Supplement Website — Here's What We Found</h1>
+<p class="subtitle">A homemade remedy video featuring VapoRub and baking soda has amassed millions of views. Our health desk investigates the science — and why one company can't keep their product in stock.</p>
+<div class="byline">
+<img class="byline-avatar" src="https://i.pravatar.cc/72?img=32" alt="Reporter">
+<div class="byline-info">
+<div class="byline-name">By <a href="#">Sarah Chen</a>, Health Correspondent</div>
+<div class="byline-date">Published March 21, 2026 · Updated 2 hours ago · 6 min read</div>
+</div>
+<div class="byline-share">
+<a href="#" class="share-fb"><svg viewBox="0 0 24 24"><path d="M24 12.07C24 5.41 18.63 0 12 0S0 5.41 0 12.07c0 6.02 4.39 11.01 10.13 11.93v-8.44H7.08v-3.49h3.05V9.41c0-3.02 1.79-4.69 4.53-4.69 1.31 0 2.69.24 2.69.24v2.97h-1.51c-1.49 0-1.96.93-1.96 1.89v2.26h3.33l-.53 3.49h-2.8v8.44C19.61 23.08 24 18.09 24 12.07z"/></svg></a>
+<a href="#" class="share-tw"><svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+<a href="#" class="share-mail"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg></a>
+</div>
+</div>
+</header>
+
+<!-- Viewer Count -->
+<div class="viewer-count">
+<span class="dot"></span>
+<span id="viewerCount">14,832</span> people reading this article right now
+</div>
+
+<!-- Article Body -->
+<div class="article-body">
+
+<p class="lead">A video that has been circulating on social media for the past 72 hours has sent shockwaves through the men's health community — and crashed at least one supplement company's website in the process.</p>
+
+<p>The clip, which has been viewed an estimated 2.3 million times before being flagged for removal on several platforms, shows a man describing a simple home remedy involving Vicks VapoRub, baking soda, and warm water that he claims dramatically improved blood flow and restored performance for men over 45.</p>
+
+<figure class="article-figure">
+<img src="https://images.unsplash.com/photo-1585435557343-3b092031a831?w=720&h=400&fit=crop" alt="Medical research laboratory">
+<figcaption>Researchers at Stanford University's Vascular Biology Department have been studying the effects of menthol compounds on blood flow. (Stock photo) | Getty Images</figcaption>
+</figure>
+
+<p>According to the video's narrator, a doctor affiliated with Stanford University allegedly shared a natural method that targets what he describes as "flaccid plaques" — buildup inside blood vessels that restricts circulation to certain areas of the male body. The remedy, he claims, clears these blockages rapidly and forces increased blood flow.</p>
+
+<p><strong>WKRN's health desk reached out to Stanford University for comment.</strong> A spokesperson declined to confirm or deny any specific faculty involvement, stating only that "the university does not endorse specific commercial products or home remedies."</p>
+
+<blockquote class="article-quote">
+"The active compound in Vicks — menthol — is actually a well-documented vasodilator. It opens blood vessels. That part is real science. What's interesting is that someone appears to have taken this concept and developed a concentrated, pharmaceutical-grade formula around it."
+<cite>— Dr. James Whitfield, Board-Certified Urologist, Cleveland Clinic (via phone interview)</cite>
+</blockquote>
+
+<p>Dr. Whitfield, who has not seen the original video but reviewed the scientific claims at our request, said the underlying mechanism — using natural vasodilators to improve blood flow — is not new in medical literature.</p>
+
+<p>"What surprises me is how many of my patients over the last week have come in asking about this," he told WKRN. "At least a dozen men, all over 45, all referencing the same video. Several of them said they've already tried a supplement version and reported significant improvements."</p>
+
+<h2 style="font-size:22px;margin:28px 0 14px;color:var(--news-dark);font-family:Arial,sans-serif">The Supplement Connection</h2>
+
+<p>While the viral video describes a DIY approach, viewers were directed to a link below the video that leads to a company selling a concentrated formula based on the same active compounds. That website experienced what appears to be a major traffic surge.</p>
+
+<div class="warning-box fade-up">
+<strong>⚠️ Editor's Note:</strong> As of publication time, the supplement website linked in the original video has experienced intermittent outages. Our team was able to access the site briefly and confirmed the product is currently listed as "Limited Stock." We cannot independently verify whether the supply shortage is genuine. <a href="YOURLINKHERE" style="color:var(--news-blue);font-weight:700;text-decoration:none" target="_blank">Check current availability here →</a>
+</div>
+
+<p>Web analytics firm SimilarWeb shows the company's domain received approximately 840,000 unique visitors in a 48-hour period — a 12,000% increase over its monthly average. The site's server reportedly went down twice, each time for approximately 30 minutes.</p>
+
+<p>"We've never seen anything like this," said a customer service representative who answered our call. "We're shipping out thousands of orders a day. Our warehouse team is working double shifts."</p>
+
+<h2 style="font-size:22px;margin:28px 0 14px;color:var(--news-dark);font-family:Arial,sans-serif">What's Actually In the Formula?</h2>
+
+<p>According to the product's label, which we were able to review during a brief window when the site was accessible, the supplement contains a proprietary blend of natural vasodilators and blood-flow enhancers. The company claims these are the same active compounds found in the Vicks remedy — but in concentrated, standardized doses.</p>
+
+<div class="info-box fade-up">
+<h3>🧪 Key Ingredients Listed on the Product Label:</h3>
+<ul>
+<li>Menthol Extract (pharmaceutical-grade, concentrated)</li>
+<li>L-Arginine — amino acid shown to boost nitric oxide production</li>
+<li>Tongkat Ali Root — traditional vitality herb, clinically studied</li>
+<li>Maca Root Extract — linked to improved energy and stamina</li>
+<li>Zinc & Magnesium Complex — essential minerals for male health</li>
+</ul>
+</div>
+
+<p>Dr. Whitfield noted that several of these ingredients have peer-reviewed research supporting their effects on vascular health and male performance.</p>
+
+<blockquote class="article-quote">
+"L-Arginine alone has over 30 clinical studies behind it. Combined with menthol's vasodilating properties, I can see why men are reporting rapid results. The science isn't magic — it's blood flow."
+<cite>— Dr. James Whitfield, Board-Certified Urologist</cite>
+</blockquote>
+
+<h2 style="font-size:22px;margin:28px 0 14px;color:var(--news-dark);font-family:Arial,sans-serif">Why Is the Video Being Removed?</h2>
+
+<p>Multiple social media platforms have flagged or removed the original video, citing violations of community guidelines around health claims. This has led to an online backlash, with users arguing the video contains no harmful content.</p>
+
+<p>"They're taking it down because Big Pharma doesn't want you to know about this," wrote one commenter on a reposted version that has since also been removed. While WKRN cannot verify these claims, the pattern of removal has only increased public interest in the video's content.</p>
+
+<a href="YOURLINKHERE" class="cta-btn pulse-anim" target="_blank">▶️ SEE THE METHOD THOUSANDS OF MEN ARE USING</a>
+<span class="cta-sub">Limited stock · Free shipping on orders today · 60-day guarantee</span>
+
+<div class="viewer-count">
+<span class="dot"></span>
+<span id="viewerCount2">3,291</span> people clicked this link in the last hour
+</div>
+
+<!-- Reader Poll -->
+<div class="poll-card fade-up">
+<h4>📊 READER POLL: Have you tried the 'Vicks Trick' method or the supplement version?</h4>
+<div class="poll-bar-wrap">
+<div class="poll-bar-label"><span>Yes — the supplement works</span><span>58%</span></div>
+<div class="poll-bar"><div class="poll-bar-fill red" style="width:58%">58%</div></div>
+</div>
+<div class="poll-bar-wrap">
+<div class="poll-bar-label"><span>Yes — tried DIY Vicks method</span><span>17%</span></div>
+<div class="poll-bar"><div class="poll-bar-fill blue" style="width:17%">17%</div></div>
+</div>
+<div class="poll-bar-wrap">
+<div class="poll-bar-label"><span>No, but I want to try it</span><span>19%</span></div>
+<div class="poll-bar"><div class="poll-bar-fill gray" style="width:19%">19%</div></div>
+</div>
+<div class="poll-bar-wrap">
+<div class="poll-bar-label"><span>I think it's a scam</span><span>6%</span></div>
+<div class="poll-bar"><div class="poll-bar-fill gray" style="width:6%">6%</div></div>
+</div>
+<div class="poll-total">12,483 votes · Poll closes in 2 days</div>
+</div>
+
+<h2 style="font-size:22px;margin:28px 0 14px;color:var(--news-dark);font-family:Arial,sans-serif">The Bottom Line</h2>
+
+<p>Whether the viral video's most dramatic claims hold up under clinical scrutiny remains to be seen. But the science behind vasodilation and natural blood-flow enhancement is well-established, and the sheer volume of men reporting positive results is difficult to dismiss entirely.</p>
+
+<p>For men over 45 who are experiencing age-related declines in performance and energy, the concentrated supplement version appears to offer a more controlled and standardized approach than the DIY Vicks method described in the video.</p>
+
+<p><em>WKRN will continue to monitor this story. If you have tried the product or have information about the original video, contact our health desk at healthtips@wkrn-news.com.</em></p>
+
+<a href="YOURLINKHERE" class="cta-btn" target="_blank">🔒 ACCESS THE FORMULA BEFORE STOCK RUNS OUT</a>
+<span class="cta-sub">Thousands of men have already ordered · Results in as little as 14 days</span>
+
+</div><!-- end article-body -->
+
+<!-- Related Stories -->
+<div class="related-box fade-up">
+<h4>Trending in Health</h4>
+<a href="YOURLINKHERE" class="related-item" target="_blank" style="text-decoration:none">
+<img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=160&h=112&fit=crop" alt="Research">
+<div>
+<div class="ri-text">Men Over 50 Are Swearing By This 'Shower Trick' — Urologists Weigh In</div>
+<div class="ri-cat">Men's Health</div>
+</div>
+</a>
+<a href="YOURLINKHERE" class="related-item" target="_blank" style="text-decoration:none">
+<img src="https://images.unsplash.com/photo-1505751172876-fa1923c5c528?w=160&h=112&fit=crop" alt="Doctor">
+<div>
+<div class="ri-text">Stanford Doctor's Controversial Advice Goes Viral, Medical Board Responds</div>
+<div class="ri-cat">Investigation</div>
+</div>
+</a>
+<a href="YOURLINKHERE" class="related-item" target="_blank" style="text-decoration:none">
+<img src="https://images.unsplash.com/photo-1559757175-5700dde675bc?w=160&h=112&fit=crop" alt="Supplement">
+<div>
+<div class="ri-text">The Natural Compounds Quietly Replacing Prescription ED Medications</div>
+<div class="ri-cat">Wellness</div>
+</div>
+</a>
+</div>
+
+<!-- Comments Section -->
+<div class="comments-section fade-up">
+<div class="comments-header">Comments (347)</div>
+
+<div class="comment" style="animation-delay:.2s">
+<div class="comment-top">
+<img class="comment-avatar" src="https://i.pravatar.cc/64?img=59" alt="User">
+<span class="comment-name">Gary M.</span>
+<span class="comment-verified">✓ Verified Reader</span>
+<span class="comment-date">2 hours ago</span>
+</div>
+<div class="comment-text">I'm 58 and I saw the original video before it got taken down. Ordered the supplement that same night. It's been 3 weeks now. I don't want to be too graphic but my wife literally asked me "what happened to you?" Worth every penny.</div>
+<div class="comment-actions"><span class="liked">❤ 241</span><span>Reply</span><span>Report</span></div>
+</div>
+
+<div class="comment" style="animation-delay:.4s">
+<div class="comment-top">
+<img class="comment-avatar" src="https://i.pravatar.cc/64?img=12" alt="User">
+<span class="comment-name">Tom Richardson</span>
+<span class="comment-date">3 hours ago</span>
+</div>
+<div class="comment-text">I'm a retired pharmacist. The menthol + L-Arginine combination makes complete sense from a biochemistry standpoint. Menthol is a peripheral vasodilator, L-Arginine is a nitric oxide precursor. Together they'd absolutely increase blood flow to extremities. This isn't snake oil, it's basic vascular science.</div>
+<div class="comment-actions"><span class="liked">❤ 189</span><span>Reply</span><span>Report</span></div>
+</div>
+
+<div class="comment" style="animation-delay:.6s">
+<div class="comment-top">
+<img class="comment-avatar" src="https://i.pravatar.cc/64?img=53" alt="User">
+<span class="comment-name">Dave K.</span>
+<span class="comment-date">4 hours ago</span>
+</div>
+<div class="comment-text">Tried the Vicks thing in the shower first. Burned like hell. Do NOT do that lol. The supplement version is way better and actually works without the pain. Just order the real thing guys, trust me on this one.</div>
+<div class="comment-actions"><span>❤ 156</span><span>Reply</span><span>Report</span></div>
+</div>
+
+<div class="comment" style="animation-delay:.8s">
+<div class="comment-top">
+<img class="comment-avatar" src="https://i.pravatar.cc/64?img=68" alt="User">
+<span class="comment-name">Ronald Hayes</span>
+<span class="comment-verified">✓ Verified Reader</span>
+<span class="comment-date">5 hours ago</span>
+</div>
+<div class="comment-text">The link worked for me about an hour ago. Ordered 3 bottles while it was still in stock. Site was loading slow but eventually went through. If you're on the fence just do it before it sells out again.</div>
+<div class="comment-actions"><span class="liked">❤ 134</span><span>Reply</span><span>Report</span></div>
+</div>
+
+<div class="comment" style="animation-delay:1s">
+<div class="comment-top">
+<img class="comment-avatar" src="https://i.pravatar.cc/64?img=15" alt="User">
+<span class="comment-name">Mike J.</span>
+<span class="comment-date">6 hours ago</span>
+</div>
+<div class="comment-text">My buddy sent me the video last week and I laughed at him. Then he showed up at poker night looking 10 years younger with this dumb grin on his face. Ordered it the next morning. Day 9 and I get it now. I completely get it.</div>
+<div class="comment-actions"><span>❤ 98</span><span>Reply</span><span>Report</span></div>
+</div>
+
+<p style="text-align:center;font-family:Arial,sans-serif;font-size:14px;color:var(--news-blue);font-weight:600;padding:16px 0;cursor:pointer">Load more comments (342 remaining)...</p>
+
+</div><!-- end comments-section -->
+
+<!-- Final CTA -->
+<a href="YOURLINKHERE" class="cta-btn pulse-anim" target="_blank" style="margin-bottom:8px">⚡ GET THE VICKS TRICK FORMULA NOW</a>
+<span class="cta-sub">⚠️ This page may be removed at any time. Bookmark it now.</span>
+
+</div><!-- end article-shell -->
+
+<script>
+// Intersection Observer for fade-up animations
+const observer = new IntersectionObserver((entries) => {
+entries.forEach(entry => {
+if (entry.isIntersecting) {
+entry.target.classList.add('visible');
+observer.unobserve(entry.target);
+}
+});
+}, { threshold: 0.15 });
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+// Live viewer count
+let viewers = 14832;
+function updateViewers() {
+viewers += Math.floor(Math.random() * 7) - 2;
+const el = document.getElementById('viewerCount');
+if (el) el.textContent = viewers.toLocaleString();
+setTimeout(updateViewers, 3000 + Math.random() * 4000);
+}
+setTimeout(updateViewers, 2000);
+
+// Click count animation
+let clicks = 3291;
+function updateClicks() {
+clicks += Math.floor(Math.random() * 5) + 1;
+const el = document.getElementById('viewerCount2');
+if (el) el.textContent = clicks.toLocaleString();
+setTimeout(updateClicks, 2000 + Math.random() * 3000);
+}
+setTimeout(updateClicks, 4000);
+
+// Poll bar animation on scroll
+const pollObserver = new IntersectionObserver((entries) => {
+entries.forEach(entry => {
+if (entry.isIntersecting) {
+entry.target.querySelectorAll('.poll-bar-fill').forEach(bar => {
+const w = bar.style.width;
+bar.style.width = '0%';
+setTimeout(() => { bar.style.width = w; }, 200);
+});
+pollObserver.unobserve(entry.target);
+}
+});
+}, { threshold: 0.3 });
+const pollCard = document.querySelector('.poll-card');
+if (pollCard) pollObserver.observe(pollCard);
+</script>
+</body>
+</html>
